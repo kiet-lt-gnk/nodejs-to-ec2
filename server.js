@@ -53,9 +53,9 @@ app.use(
 );
 // simple route
 app.get("/", (req, res) => {
-  // logger.warning("Hello, Winston!");
-  // logger.info("127.0.0.1 - there's no place like home");
-  // logger.error("Events Error: Unauthenticated user");
+  logger.warning("Hello, Winston!");
+  logger.info("127.0.0.1 - there's no place like home");
+  logger.error("Events Error: Unauthenticated user");
   res.json({ message: "Welcome to bezkoder application." });
 });
 // routes

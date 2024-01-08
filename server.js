@@ -66,6 +66,7 @@ mongoose
 
 // simple route
 app.get("/", (req, res) => {
+  console.log("Logger......");
   res.json({ message: "Welcome to bezkoder application." });
 });
 

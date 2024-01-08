@@ -52,68 +52,6 @@ app.use(
   })
 );
 
-mongoose
-  .connect(`mongodb+srv://lamtuankiet0901:CBq571giQE96Cw2K@cluster0.l0zlbdb.mongodb.net/?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-  });
-
-// simple route
-app.get("/", (req, res) => {
-  logger.warning("Hello, Winston!");
-  logger.info("127.0.0.1 - there's no place like home");
-  logger.error("Events Error: Unauthenticated user");
-  res.json({ message: "Welcome to bezkoder application." });
-});
-
-io.on('connection', (socket) => {
-  console.log('a user connected', socket.id);
-
-  //send and get message
-  socket.on("sendMessage", async ({ receiverId, phone, amout, total, productID, position }) => {
-
-    console.log(receiverId);
-    try {
-      const newTran = new Transaction({
-        amout, productID, phone, total
-      })
-
-      await newTran.save()
-
-
-      console.log("Connect MQTT");
-
-
-      console.log("Connect MQTT DONE");
-
-
-      io.to(receiverId).emit("getMessage", {
-        message: "DONE",
-      })
-    } catch (error) {
-      console.log(error);
-      io.to(receiverId).emit("getMessage", {
-        message: "FAIL",
-      })
-    }
-
-  })
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-
-});
-http.listen(4000, () => {
-  console.log('listening on *:4000');
-});
 // routes
 app.use('/api', require('./app/routes/product.routes'))
 

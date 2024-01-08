@@ -12,6 +12,7 @@ const io = require('socket.io')(http, {
 const Transaction = require('./app/models/transaction.model')
 
 const mqtt = require("mqtt");
+const logger = require("./logger");
 const client = mqtt.connect([{ host: 'tcp://0.tcp.ap.ngrok.io', port: 14374 }]);
 
 client.on("connect", () => {
@@ -66,7 +67,9 @@ mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  console.log("Logger......");
+  logger.warning("Hello, Winston!");
+  logger.info("127.0.0.1 - there's no place like home");
+  logger.error("Events Error: Unauthenticated user");
   res.json({ message: "Welcome to bezkoder application." });
 });
 
